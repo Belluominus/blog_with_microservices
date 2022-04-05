@@ -10,6 +10,27 @@ app.use(cors());
 
 const commentsByPostId = {};
 
+const handleEvent = async (type, data) => {
+    if(type === 'CommentModerated') {
+        const { postId, id, status, content } = data;
+        const comments = commentsByPostId[postId];
+
+        const comment = comments.find(comment => comment.id === id );
+
+        comment.status = status;
+
+        await axios.post('http://localhost:4005/events', {
+            type: "CommentUpdated",
+            data: {
+                id, 
+                content,
+                postId,
+                status
+            }
+        })
+    }
+};
+
 app.get('/posts/:id/comments', (req, res) => {
     const { id } = req.params;
     
@@ -41,12 +62,27 @@ app.post('/posts/:id/comments', async (req, res) => {
     res.status(201).send(comments);
 });
 
-app.post('/events', (req, res) => {
+app.post('/events', async (req, res) => {
     console.log('Received Event', req.body.type);
 
-    res.send({});
-})
+    const { type, data }= req.body;
 
-app.listen(4001, () => {
+    handleEvent(type, data)
+
+    res.send({});
+});
+
+app.listen(4001, async () => {
     console.log('listening on 4001')
+    try {
+        const {data} = await axios.get("http://localhost:4005/events");
+     
+        for (let event of data) {
+          console.log("Processing event:", event.type);
+     
+          handleEvent(event.type, event.data);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
 });
