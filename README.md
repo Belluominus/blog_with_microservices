@@ -13,4 +13,14 @@ This application save the data in a object so it don't have a database, to run t
 <br>
 
 ##
+<br>
 
+<div align="center">
+  
+<img width="80%" alt="application" src="https://github.com/Belluominus/blog_with_microservices/blob/main/readMeFiles/aplication.gif" />
+
+<br><br>
+
+<img width="80%" alt="skaffold" src="https://github.com/Belluominus/blog_with_microservices/blob/main/readMeFiles/skaffold.gif" />
+
+</div>
