@@ -1,3 +1,7 @@
+<div align="center">
+<img width="70%" alt="code" src="https://github.com/Belluominus/blog_with_microservices/blob/main/readMeFiles/code.jfif" />
+</div>
+
 <h1 align="center">
   Blog with microservices
 </h1>
