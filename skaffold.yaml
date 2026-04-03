@@ -1,58 +1,59 @@
-apiVersion: skaffold/v2alpha3
+apiVersion: skaffold/v4beta13
 kind: Config
-deploy:
-  kubectl:
-    manifests:
-      - ./infra/k8s/*
 build:
-  local:
-    push: false
   artifacts:
     - image: belluominus/client
       context: client
-      docker:
-        dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.js'
+          - src: src/**/*.js
             dest: .
+      docker:
+        dockerfile: Dockerfile
     - image: belluominus/comments
       context: comments
-      docker:
-        dockerfile: Dockerfile
       sync:
         manual:
           - src: '*.js'
             dest: .
+      docker:
+        dockerfile: Dockerfile
     - image: belluominus/event-bus
       context: event-bus
-      docker:
-        dockerfile: Dockerfile
       sync:
         manual:
           - src: '*.js'
             dest: .
+      docker:
+        dockerfile: Dockerfile
     - image: belluominus/moderation
       context: moderation
-      docker:
-        dockerfile: Dockerfile
       sync:
         manual:
           - src: '*.js'
             dest: .
+      docker:
+        dockerfile: Dockerfile
     - image: belluominus/posts
       context: posts
-      docker:
-        dockerfile: Dockerfile
       sync:
         manual:
           - src: '*.js'
             dest: .
+      docker:
+        dockerfile: Dockerfile
     - image: belluominus/query
       context: query
-      docker:
-        dockerfile: Dockerfile
       sync:
         manual:
           - src: '*.js'
             dest: .
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+deploy:
+  kubectl: {}
